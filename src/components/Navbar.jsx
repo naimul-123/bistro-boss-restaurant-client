@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
+import { FaShoppingCart } from 'react-icons/fa';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
@@ -10,6 +11,7 @@ const Navbar = () => {
         <li><NavLink to="/order/salad">Order Food</NavLink></li>
         {user ? <li><Link onClick={logOut}>Log Out</Link></li> : <><li><NavLink to="/login">Log in</NavLink></li>
             <li><NavLink to="/signup">Sign Up</NavLink></li></>}
+        <li></li>
 
     </>
     return (
@@ -29,9 +31,25 @@ const Navbar = () => {
                 <ul className="menu menu-horizontal px-1">
                     {navItems}
                 </ul>
+
             </div>
-            <div className="navbar-end">
-                <a className="btn">Button</a>
+            <div className="navbar-end justify-between">
+                <div className="indicator">
+                    <span className="indicator-item badge rounded-full badge-secondary">99+</span>
+                    <button className='btn btn-circle btn-ghost'> <FaShoppingCart /></button>
+
+                </div>
+                <div className='group'>
+                    <div className=" avatar group-hover:hidden">
+                        <div className="w-10 rounded-full">
+                            <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                        </div>
+                    </div>
+                    <div className='hidden group-hover:block'>
+                        <p>{user?.displayName}</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     );
