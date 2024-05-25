@@ -1,21 +1,55 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../provider/AuthProvider';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 const Login = () => {
-	const [disabled, setDisabled]= useState(true)
-	const captchaRef = useRef(null)
+	const [disabled, setDisabled] = useState(true)
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	const from = location.state?.from?.pathname || "/"
+	const { signIn } = useContext(AuthContext)
 	useEffect(() => {
 		loadCaptchaEnginge(6)
-	},[])
-    const handleLogin = (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const email = form.email.value
-        const password = form.password.value
-        console.log(email, password);
+	}, []);
+	const handleLogin = (e) => {
+		e.preventDefault();
+		const form = e.target;
+		const email = form.email.value
+		const password = form.password.value
+		signIn(email, password)
+			.then(result => {
+				if (result.user) {
+					Swal.fire({
+						title: "Successfully loged in!",
+						showClass: {
+							popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+						},
+						hideClass: {
+							popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+						}
+					});
+
+					navigate(from, { replace: true })
+				}
+
+				// console.log(result.user)
+			})
+			.catch(err => console.log(err))
+
 	}
-	
-	const handleValidateCaptcha = () => {
-		const user_captcha_value = captchaRef.current.value;
+
+	const handleValidateCaptcha = (e) => {
+		const user_captcha_value = e.target.value;
 		if (validateCaptcha(user_captcha_value)) {
 			setDisabled(false)
 		}
@@ -39,8 +73,8 @@ const Login = () => {
 								<span className='label-text'>Email</span>
 							</label>
 							<input
-                                type='email'
-                                name='email'
+								type='email'
+								name='email'
 								placeholder='email'
 								className='input input-bordered'
 								required
@@ -51,41 +85,38 @@ const Login = () => {
 								<span className='label-text'>Password</span>
 							</label>
 							<input
-                                type='password'
-                                name='password'
+								type='password'
+								name='password'
 								placeholder='password'
 								className='input input-bordered'
 								required
 							/>
-							<label className='label'>
-								<a
-									href='#'
-									className='label-text-alt link link-hover'>
-									Forgot password?
-								</a>
-							</label>
+
 						</div>
 						<div className='form-control'>
 							<label className='label'>
-								<LoadCanvasTemplate/>
+								<LoadCanvasTemplate />
 							</label>
 							<input
 								onBlur={handleValidateCaptcha}
-                                type='text'
+								type='text'
 								name='captcha'
-								ref={captchaRef}
+
 								placeholder='captcha'
 								className='input input-bordered'
 								required
 							/>
 							{/* <button className='btn btn-outline btn-sm my-3' onClick={handleValidateCaptcha}>Validate</button> */}
-							
+
 						</div>
 						<div className='form-control mt-6'>
 							<input type="submit" disabled={disabled} value="Login" className='btn btn-primary' />
-							
+							<label className='label'>
+								<p>Are you new? go to <Link to="/signup">SignUp page</Link></p>
+							</label>
 						</div>
 					</form>
+
 				</div>
 			</div>
 		</div>

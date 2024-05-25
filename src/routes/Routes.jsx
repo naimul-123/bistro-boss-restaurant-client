@@ -4,6 +4,8 @@ import Home from "../pages/Home";
 import Menu from "../pages/Menu";
 import Order from "../pages/Order";
 import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
+import PrivateRoute from "./PrivateRoute";
 const routes = createBrowserRouter([
     {
         path: "/",
@@ -15,7 +17,7 @@ const routes = createBrowserRouter([
             },
             {
                 path: '/menu',
-                element: <Menu />
+                element: <PrivateRoute><Menu /></PrivateRoute>
             },
             {
                 path: '/order/:category',
@@ -24,6 +26,10 @@ const routes = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login />
+            },
+            {
+                path: '/signup',
+                element: <SignUp />
             },
         ]
     }

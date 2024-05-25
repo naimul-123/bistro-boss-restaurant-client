@@ -7,7 +7,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 function App() {
 	const location = useLocation();
-	const isLogInPage = location.pathname.includes('login');
+	const isLogInPage = location.pathname.includes('login') || location.pathname.includes('signup');
 
 	return (
 		<div className='max-w-screen-2xl mx-auto'>

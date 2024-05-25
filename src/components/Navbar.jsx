@@ -1,12 +1,16 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext)
     const navItems = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/menu">Our Menu</NavLink></li>
         <li><NavLink to="/order/salad">Order Food</NavLink></li>
-        <li><NavLink to="/login">Log in</NavLink></li>
+        {user ? <li><Link onClick={logOut}>Log Out</Link></li> : <><li><NavLink to="/login">Log in</NavLink></li>
+            <li><NavLink to="/signup">Sign Up</NavLink></li></>}
+
     </>
     return (
         <div className="navbar fixed z-10 max-w-screen-2xl  bg-gray-900 bg-opacity-30 text-white">
