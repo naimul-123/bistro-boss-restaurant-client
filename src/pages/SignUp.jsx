@@ -3,9 +3,11 @@ import { AuthContext } from '../provider/AuthProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const SignUp = () => {
     const { user, loading, createUser, signIn, logOut, updateUserProfile } = useContext(AuthContext)
+    const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const {
         register,
@@ -24,13 +26,25 @@ const SignUp = () => {
                         .then(() => {
                             logOut()
                                 .then(() => {
-                                    reset()
-                                    Swal.fire({
-                                        title: "Signed Up!",
-                                        text: "Successfully Signed Up",
-                                        icon: "success"
-                                    });
-                                    navigate('/login')
+                                    const userInfo = {
+                                        name: data.name,
+                                        email: data.email
+                                    }
+
+                                    axiosPublic.post('/users', userInfo)
+                                        .then(res => {
+                                            if (res.data.insertedId) {
+                                                reset()
+                                                Swal.fire({
+                                                    title: "Signed Up!",
+                                                    text: "Successfully Signed Up",
+                                                    icon: "success"
+                                                });
+                                                navigate('/login')
+                                            }
+                                        })
+
+
                                 })
 
                         });

@@ -37,7 +37,7 @@ const routes = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <DashBoard />,
+        element: <PrivateRoute><DashBoard /></PrivateRoute>,
         children: [
             {
                 path: "cart",
