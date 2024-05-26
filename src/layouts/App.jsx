@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import Footer from './components/Footer';
-import Navbar from './components/Navbar';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 import '@smastrom/react-rating/style.css';
 import ReactDOM from 'react-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';

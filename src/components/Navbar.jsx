@@ -2,16 +2,24 @@ import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import { FaShoppingCart } from 'react-icons/fa';
+import useCart from '../hooks/useCart';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
+    const [cart] = useCart();
     const navItems = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/menu">Our Menu</NavLink></li>
         <li><NavLink to="/order/salad">Order Food</NavLink></li>
         {user ? <li><Link onClick={logOut}>Log Out</Link></li> : <><li><NavLink to="/login">Log in</NavLink></li>
             <li><NavLink to="/signup">Sign Up</NavLink></li></>}
-        <li></li>
+        <li><NavLink to="/dashboard/cart">
+
+            <div className="indicator">
+                <span className="indicator-item badge rounded-full badge-secondary">{cart.length}+</span>
+                <button className='btn btn-circle btn-ghost'> <FaShoppingCart /></button>
+
+            </div></NavLink></li>
 
     </>
     return (
@@ -33,12 +41,8 @@ const Navbar = () => {
                 </ul>
 
             </div>
-            <div className="navbar-end justify-between">
-                <div className="indicator">
-                    <span className="indicator-item badge rounded-full badge-secondary">99+</span>
-                    <button className='btn btn-circle btn-ghost'> <FaShoppingCart /></button>
+            <div className="navbar-end">
 
-                </div>
                 <div className='group'>
                     <div className=" avatar group-hover:hidden">
                         <div className="w-10 rounded-full">
