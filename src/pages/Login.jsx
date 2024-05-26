@@ -3,6 +3,7 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { AuthContext } from '../provider/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import SocialLogIn from '../components/SocialLogIn';
 const Login = () => {
 	const [disabled, setDisabled] = useState(true)
 	const navigate = useNavigate();
@@ -116,7 +117,7 @@ const Login = () => {
 							</label>
 						</div>
 					</form>
-
+					<SocialLogIn></SocialLogIn>
 				</div>
 			</div>
 		</div>
