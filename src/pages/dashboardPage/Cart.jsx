@@ -9,7 +9,6 @@ const Cart = () => {
     const totalPrice = cart.reduce((total, item) => total + item.price, 0)
     const axiosSecure = useAxiosSecure();
 
-    console.log(cart);
     const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",

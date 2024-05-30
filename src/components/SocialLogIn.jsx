@@ -2,12 +2,15 @@ import { FaGoogle } from "react-icons/fa6";
 import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SocialLogIn = () => {
     const { googleSignIn } = useAuth();
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/"
     const handleGoogleSingIn = () => {
         googleSignIn()
             .then(result => {
@@ -27,9 +30,10 @@ const SocialLogIn = () => {
                                     text: "Successfully Signed Up",
                                     icon: "success"
                                 });
-                                navigate('/')
+                                navigate(from, { replace: true })
                             }
                         })
+
                 }
             })
             .catch(err => console.log(err))
