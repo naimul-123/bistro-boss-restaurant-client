@@ -3,14 +3,17 @@ import { FaAd, FaHome, FaUtensilSpoon } from 'react-icons/fa';
 import { FaBook, FaCalendar, FaCartShopping, FaList, FaUsers, FaUtensils } from 'react-icons/fa6';
 import { NavLink, Outlet } from 'react-router-dom';
 import useAdmin from '../hooks/useAdmin';
+import useCart from '../hooks/useCart';
 
 const DashBoard = () => {
-    const isAdmin = useAdmin()
+    const [isAdmin] = useAdmin()
+    const [cart] = useCart()
 
     return (
         <div className='flex'>
             <div className='w-64 min-h-screen bg-orange-400'>
                 <ul className='menu'>
+
                     {isAdmin ? <>
                         <li>
 
@@ -29,11 +32,20 @@ const DashBoard = () => {
                         <li>
                             <NavLink to="/dashboard/bookings"> <FaBook />Manage Booking</NavLink>
                         </li>
+
                         <li>
                             <NavLink to="/dashboard/users"> <FaUsers />All Users</NavLink>
                         </li>
-                        <div className="divider"></div>
-                    </> : <></>}
+
+
+                    </> : <>
+
+
+                    </>}
+
+                    <li>  <NavLink to="/dashboard/cart"> <FaUsers />My cart( {cart.length})</NavLink></li>
+                    <li>  <NavLink to="/dashboard/paymentHistory"> <FaUsers />Payment History</NavLink></li>
+                    <div className="divider"></div>
                     <li>
                         <NavLink to="/"> <FaHome />Home</NavLink>
                     </li>
