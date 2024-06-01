@@ -3,7 +3,7 @@ import useAuth from './useAuth';
 import { useNavigate } from 'react-router-dom';
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://bistro-boss-restaurant-server-rho.vercel.app'
 })
 const useAxiosSecure = () => {
     const navigate = useNavigate()
@@ -25,6 +25,8 @@ const useAxiosSecure = () => {
             if (status === 401 || status === 403) {
                 await logOut();
                 navigate('/login');
+
+
             }
 
             return Promise.reject(err)

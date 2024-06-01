@@ -15,6 +15,8 @@ import ManageItems from "../pages/dashboardPage/ManageItems";
 import UpdateItem from "../pages/dashboardPage/UpdateItem";
 import Payment from "../pages/dashboardPage/Payment";
 import PaymentHistory from "../pages/dashboardPage/PaymentHistory";
+import AdminHome from "../pages/dashboardPage/AdminHome";
+import UserHome from "../pages/dashboardPage/UserHome";
 const routes = createBrowserRouter([
     {
         path: "/",
@@ -47,6 +49,14 @@ const routes = createBrowserRouter([
         element: <PrivateRoute><DashBoard /></PrivateRoute>,
         children: [
             {
+                path: "adminHome",
+                element: <AdminRoute><AdminHome /></AdminRoute>
+            },
+            {
+                path: "userHome",
+                element: <UserHome />
+            },
+            {
                 path: "cart",
                 element: <Cart />
             },
@@ -65,7 +75,7 @@ const routes = createBrowserRouter([
             {
                 path: "updateItem/:id",
                 element: <UpdateItem />,
-                loader: ({ params }) => fetch(`http://localhost:5000/menu/${params.id}`)
+                loader: ({ params }) => fetch(`https://bistro-boss-restaurant-server-rho.vercel.app/menu/${params.id}`)
             },
             {
                 path: "manageItems",
